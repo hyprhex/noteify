@@ -16,7 +16,8 @@ func (app *application) showArticleHandler(w http.ResponseWriter, r *http.Reques
 	// Check if id exists
 	id, err := app.readIDParam(r)
 	if err != nil {
-		http.NotFound(w, r)
+		// Use not found response helper
+		app.notFoundResponse(w, r)
 		return
 	}
 
@@ -31,7 +32,7 @@ func (app *application) showArticleHandler(w http.ResponseWriter, r *http.Reques
 
 	err = app.writeJSON(w, http.StatusOK, envelope{"article": article}, nil)
 	if err != nil {
-		app.logger.Print(err)
-		http.Error(w, "The server encounterd a problem and could not process your request", http.StatusInternalServerError)
+		// use server error response helper
+		app.serverErrorResponse(w, r, err)
 	}
 }
