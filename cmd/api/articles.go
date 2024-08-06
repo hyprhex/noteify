@@ -29,7 +29,7 @@ func (app *application) showArticleHandler(w http.ResponseWriter, r *http.Reques
 		CreatedAt:   time.Now(),
 	}
 
-	err = app.writeJSON(w, http.StatusOK, article, nil)
+	err = app.writeJSON(w, http.StatusOK, envelope{"article": article}, nil)
 	if err != nil {
 		app.logger.Print(err)
 		http.Error(w, "The server encounterd a problem and could not process your request", http.StatusInternalServerError)
